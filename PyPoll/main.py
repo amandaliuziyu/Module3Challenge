@@ -1,4 +1,8 @@
 import csv
+import os
+script_dir = os.path.dirname(os.path.abspath(__file__))
+election_data =  os.path.join(script_dir,'election_data.csv')
+
 
 # Initialize variables
 total_votes = 0
@@ -6,7 +10,7 @@ candidates = {}
 winner = ""
 
 # Open the CSV file and read the data
-with open('Module3Challenge/python-challenge/PyPoll/Resources/election_data.csv', 'r') as file:
+with open(election_data, 'r') as file:
     reader = csv.DictReader(file)
     
     for row in reader:
@@ -41,16 +45,23 @@ print("-------------------------")
 print(f"Winner: {winner}")
 print("-------------------------")
 
-# Write the analysis to a text file
-with open('Module3Challenge/python-challenge/PyPoll/analysis/election_results.txt', 'w') as output_file:
-    output_file.write("Election Results\n")
-    output_file.write("-------------------------\n")
-    output_file.write(f"Total Votes: {total_votes}\n")
-    output_file.write("-------------------------\n")
-    for candidate, data in candidates.items():
-        output_file.write(f"{candidate}: {data['percentage']:.3f}% ({data['votes']})\n")
-    output_file.write("-------------------------\n")
-    output_file.write(f"Winner: {winner}\n")
-    output_file.write("-------------------------\n")
 
-print("Analysis has been exported to election_results.txt")
+# Define the file name
+file_name = "election_results.txt"
+
+# Create the full path to the file
+file_path = os.path.join(script_dir, file_name)
+
+# Write to the file
+with open(file_path, 'w') as file:
+    file.write("Election Results\n")
+    file.write("-------------------------\n")
+    file.write(f"Total Votes: {total_votes}\n")
+    file.write("-------------------------\n")
+    for candidate, data in candidates.items():
+        file.write(f"{candidate}: {data['percentage']:.3f}% ({data['votes']})\n")
+    file.write("-------------------------\n")
+    file.write(f"Winner: {winner}\n")
+    file.write("-------------------------\n")
+
+print(f"Analysis has been exported to : {file_path}")

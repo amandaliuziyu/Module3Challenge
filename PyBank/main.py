@@ -1,6 +1,7 @@
 import csv
 import os
-
+script_dir = os.path.dirname(os.path.abspath(__file__))
+budget_data =  os.path.join(script_dir,'budget_data.csv')
 
 
 # Initialize variables
@@ -14,7 +15,7 @@ greatest_increase = {"date": "", "amount": float('-inf')}
 greatest_decrease = {"date": "", "amount": float('inf')}
 
 # Open the CSV file and read the data
-with open('Module3Challenge/python-challenge/PyBank/Resources/budget_data.csv','r') as file:
+with open(budget_data,'r') as file:
     reader = csv.DictReader(file)
 
     for row in reader:
@@ -49,19 +50,30 @@ with open('Module3Challenge/python-challenge/PyBank/Resources/budget_data.csv','
 average_change = sum(changes) / len(changes) if changes else 0
     
  # Prepare the analysis text
-analysis_text = f"Financial Analysis\n----------------------------\n"
-analysis_text += f"Total Months: {total_months}\n"
-analysis_text += f"Total: ${net_total}\n"
-analysis_text += f"Average Change: ${average_change:.2f}\n"
-analysis_text += f"Greatest Increase in Profits: {greatest_increase['date']} (${greatest_increase['amount']})\n"
-analysis_text += f"Greatest Decrease in Profits: {greatest_decrease['date']} (${greatest_decrease['amount']})\n"
+#analysis_text = f"Financial Analysis\n----------------------------\n"
+#analysis_text += f"Total Months: {total_months}\n"
+#analysis_text += f"Total: ${net_total}\n"
+#analysis_text += f"Average Change: ${average_change:.2f}\n"
+#analysis_text += f"Greatest Increase in Profits: {greatest_increase['date']} (${greatest_increase['amount']})\n"
+#analysis_text += f"Greatest Decrease in Profits: {greatest_decrease['date']} (${greatest_decrease['amount']})\n"
 
 # Print the analysis to the terminal
-print(analysis_text)
+#print(analysis_text)
 
-# Export the analysis to a text file
-output_path = 'Module3Challenge/python-challenge/PyBank/analysis'
-with open('Module3Challenge/python-challenge/PyBank/analysis/financial_analysis.txt', 'w') as output_file:
-        output_file.write(analysis_text)
+# Define the file name
+file_name = "financial_analysis.txt"
 
-print(f"Analysis has been exported to {output_path}")
+# Create the full path to the file
+file_path = os.path.join(script_dir, file_name)
+
+# Write to the file
+with open(file_path, 'w') as file:
+    file.write("Financial Analysis\n")
+    file.write("-------------------------\n")
+    file.write(f"Total Months: {total_months}\n")
+    file.write(f"Total: ${net_total}\n")
+    file.write(f"Average Change: ${average_change:.2f}\n")
+    file.write(f"Greatest Increase in Profits: {greatest_increase['date']} (${greatest_increase['amount']})\n")
+    file.write(f"Greatest Decrease in Profits: {greatest_decrease['date']} (${greatest_decrease['amount']})\n")
+
+print(f"Analysis has been exported to : {file_path}")
